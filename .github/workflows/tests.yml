@@ -1,0 +1,45 @@
+name: tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+        laravel: ['12.*', '13.*']
+    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php: ${{ matrix.php }}
+          extensions: none, ctype, curl, dom, fileinfo, filter, iconv, json, libxml, mbstring, openssl, pdo, phar, simplexml, tokenizer, xml, xmlwriter
+          coverage: none
+      - run: composer require --dev "illuminate/support:${{ matrix.laravel }}" --no-update --no-interaction
+      - run: composer update --prefer-dist --no-interaction --no-progress
+      - name: ext-soap must not be needed
+        run: php -r 'exit(extension_loaded("soap") ? 1 : 0);'
+      - run: vendor/bin/phpunit
+      - run: vendor/bin/phpstan analyse --memory-limit=1G
+      - run: vendor/bin/pint --test
+
+  core-without-laravel:
+    # The core must install and run with no framework packages present.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php: '8.3'
+          coverage: none
+      - run: composer install --no-dev --no-interaction --no-progress
+      - name: Parse a recorded response with the core only
+        run: |
+          php -r 'require "vendor/autoload.php";
+            $t = new IntrAgile\MnbExchangeRates\Testing\RecordedTransport(["GetCurrentExchangeRates" => file_get_contents("tests/fixtures/current.xml")]);
+            $rate = (new IntrAgile\MnbExchangeRates\MnbClient($t))->latest()->rate("JPY")->perUnit();
+            exit($rate === "2.053" ? 0 : 1);'

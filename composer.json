@@ -1,0 +1,83 @@
+{
+    "name": "intragile/laravel-mnb-exchange-rates",
+    "description": "MNB (Magyar Nemzeti Bank) official exchange rates without ext-soap: today's and historical rates with holiday fallback, unit-normalised exact decimal strings, conversion, caching and a test fake. Framework-independent core with an optional Laravel layer. MNB hivatalos devizaárfolyamok SOAP-bővítmény nélkül.",
+    "keywords": [
+        "laravel",
+        "mnb",
+        "magyar-nemzeti-bank",
+        "hungarian-national-bank",
+        "exchange-rates",
+        "currency",
+        "huf",
+        "forint",
+        "hungary",
+        "hungarian",
+        "soap",
+        "magyar",
+        "árfolyam",
+        "devizaárfolyam",
+        "középárfolyam"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://intragile.eu",
+    "support": {
+        "issues": "https://github.com/intragile/laravel-mnb-exchange-rates/issues",
+        "source": "https://github.com/intragile/laravel-mnb-exchange-rates",
+        "security": "https://github.com/intragile/laravel-mnb-exchange-rates/security/policy"
+    },
+    "authors": [
+        {
+            "name": "IntrAgile Kft.",
+            "email": "info@intragile.eu",
+            "homepage": "https://intragile.eu"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-libxml": "*",
+        "ext-simplexml": "*"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.9",
+        "illuminate/support": "^12.0|^13.0",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.20",
+        "orchestra/testbench": "^10.0|^11.0",
+        "phpunit/phpunit": "^12.0"
+    },
+    "conflict": {
+        "illuminate/support": "<12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IntrAgile\\MnbExchangeRates\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IntrAgile\\MnbExchangeRates\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IntrAgile\\MnbExchangeRates\\Laravel\\MnbExchangeRatesServiceProvider"
+            ],
+            "aliases": {
+                "Mnb": "IntrAgile\\MnbExchangeRates\\Laravel\\Facades\\Mnb"
+            }
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:e2e": "phpunit --group e2e",
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "format": "pint"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
