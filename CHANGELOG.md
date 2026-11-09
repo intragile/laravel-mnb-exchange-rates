@@ -6,7 +6,7 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.0.0] - 2026-11-09
 
 ### Added
 
@@ -17,6 +17,8 @@ All notable changes are recorded here. The format follows
 - Laravel layer: container bindings, a facade, response caching with separate lifetimes for
   history and today, `Mnb::fake()` and the `mnb:rates` command.
 - `FakeExchangeRates` and `RecordedTransport` for tests without Laravel.
+
+[1.0.0]: https://github.com/intragile/laravel-mnb-exchange-rates/releases/tag/v1.0.0
 
 ---
 
