@@ -22,7 +22,8 @@ jobs:
       - run: composer require --dev "illuminate/support:${{ matrix.laravel }}" --no-update --no-interaction
       - run: composer update --prefer-dist --no-interaction --no-progress
       - name: ext-soap must not be needed
-        run: php -r 'exit(extension_loaded("soap") ? 1 : 0);'
+        run: |
+          php -r 'exit(extension_loaded("soap") ? 1 : 0);'
       - run: vendor/bin/phpunit
       - run: vendor/bin/phpstan analyse --memory-limit=1G
       - run: vendor/bin/pint --test
