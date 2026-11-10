@@ -39,7 +39,7 @@
         "ext-simplexml": "*"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^7.9",
+        "guzzlehttp/guzzle": "^7.9 || ^8.0",
         "illuminate/support": "^12.0|^13.0",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.20",
